@@ -12,17 +12,23 @@ object Main {
       .load("src/data/adultTrain.csv")
       .na.drop()
 
-    val featurizedData = FeatureExtraction.getFeaturizedDf(data)
+    val categoricalFeatures = Array("workclass", "education", "marital_status", "occupation", "relationship", "race",
+      "sex", "native_country")
+
+    val featurizedData = FeatureExtraction.getFeaturizedDf(data, categoricalFeatures)
     val Array(trainingData, testData) = featurizedData.randomSplit(Array(0.7, 0.3))
     val model = RandomForestClassifier.train(trainingData)
 
     val testPredictions = RandomForestClassifier.predict(model, testData)
     val trainingPredictions = RandomForestClassifier.predict(model, trainingData)
 
-    println("Test predictions:")
-    OutputEvaluation.evaluatePredictions(testPredictions)
-    println("training predictions:")
-    OutputEvaluation.evaluatePredictions(trainingPredictions)
+    val columnsToDrop = categoricalFeatures.map(_ + "_indexed") ++ Array("features", "rawPrediction", "probability")
+
+    OutputHandler.writeScore(testPredictions, "TestPredictionAccuracy")
+    OutputHandler.writeOutput(testPredictions, columnsToDrop, "TestPrediction")
+
+    OutputHandler.writeScore(trainingPredictions, "TrainingPredictionAccuracy")
+    OutputHandler.writeOutput(trainingPredictions, columnsToDrop, "TrainingPrediction")
 
     spark.stop()
   }

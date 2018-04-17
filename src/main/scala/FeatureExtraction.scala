@@ -4,9 +4,7 @@ import org.apache.spark.sql.DataFrame
 
 object FeatureExtraction {
 
-  def getFeaturizedDf(data: DataFrame): DataFrame ={
-    val categoricalFeatures = Array("workclass", "education", "marital_status", "occupation", "relationship", "race",
-      "sex", "native_country")
+  def getFeaturizedDf(data: DataFrame, categoricalFeatures: Array[String]): DataFrame ={
     val allNumericalData = handleCategoricalFeatures(data, categoricalFeatures)
 
     val featureList = categoricalFeatures.map(_ + "_indexed") ++
