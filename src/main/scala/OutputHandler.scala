@@ -19,6 +19,9 @@ object OutputHandler {
   }
 
   def writeOutput(predictions: DataFrame, columnsToDrop: Array[String], fileName: String): Unit ={
-    predictions.drop(columnsToDrop:_*).write.mode(SaveMode.Overwrite).csv(outputPath + fileName)
+    predictions.drop(columnsToDrop:_*).write
+      .option("header", "true")
+      .mode(SaveMode.Overwrite)
+      .csv(outputPath + fileName)
   }
 }

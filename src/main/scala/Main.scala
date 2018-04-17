@@ -21,7 +21,8 @@ object Main {
     val testPredictions = RandomForestClassifier.predict(model, testData)
     val trainingPredictions = RandomForestClassifier.predict(model, trainingData)
 
-    val columnsToDrop = categoricalFeatures.map(_ + "_indexed") ++ Array("features", "rawPrediction", "probability")
+    val columnsToDrop = categoricalFeatures.map(_ + "_indexed")++
+      Array("features", "rawPrediction", "probability", "label", "prediction")
 
     OutputHandler.writeScore(testPredictions, "TestPredictionAccuracy")
     OutputHandler.writeOutput(testPredictions, columnsToDrop, "TestPrediction")
