@@ -1,7 +1,6 @@
-import org.apache.spark.ml.classification.RandomForestClassificationModel
 import org.apache.spark.sql.SparkSession
 
-object Main {
+object RandomForestPrediction {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder.appName("Question1").master("local[*]").getOrCreate()
 
