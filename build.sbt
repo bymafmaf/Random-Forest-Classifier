@@ -1,4 +1,4 @@
-name := "OrganonQuestion2"
+name := "RandomForestClassifier"
 
 version := "0.1"
 
